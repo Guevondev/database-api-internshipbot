@@ -10,13 +10,13 @@ export class InternshipController {
     addInternship(
         @Body('author') internAuthor: string,
         @Body('offer') internOffer: string,
-        @Body('origin') internOrigin: string
+        @Body('source') internSource: string
     ): any {
         const createdAt = new Date()
         const generated = this.internshipService.insertInternship(
             internAuthor,
             internOffer,
-            internOrigin,
+            internSource,
             createdAt
         )
         return generated
