@@ -8,10 +8,10 @@ export class InternshipService {
 
     constructor(@InjectModel('Internship') private readonly internshipModel: Model<Internship>) {}
 
-    async insertInternship(author: string, description: string, origin: string, createdAt: Date) {
+    async insertInternship(author: string, offer: string, origin: string, createdAt: Date) {
         const newInternship = new this.internshipModel({
             author,
-            description,
+            offer,
             origin,
             createdAt
         })

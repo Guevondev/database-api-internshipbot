@@ -9,13 +9,13 @@ export class InternshipController {
     @Post()
     addInternship(
         @Body('author') internAuthor: string,
-        @Body('description') internDescription: string,
+        @Body('offer') internOffer: string,
         @Body('origin') internOrigin: string
     ): any {
         const createdAt = new Date()
         const generated = this.internshipService.insertInternship(
             internAuthor,
-            internDescription,
+            internOffer,
             internOrigin,
             createdAt
         )

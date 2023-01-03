@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import Internship, { InternshipSchema } from "./internship.model";
+import { InternshipSchema } from "./internship.model";
 import { InternshipController } from "./internships.controller";
 import { InternshipService } from "./internships.service";
 
