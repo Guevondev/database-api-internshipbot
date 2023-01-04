@@ -4,7 +4,8 @@ export const InternshipSchema = new mongoose.Schema({
     author: {type: String, required: true},
     offer: {type: String, required: true},
     source: {type: String, required: true}, 
-    createdAt: {type: Date, required: true} 
+    createdAt: {type: Date, required: true},
+    status: {type: Boolean, required: true}
 })
 
 interface Internship {
@@ -13,6 +14,7 @@ interface Internship {
     offer: string,
     source: string,
     createdAt: Date
+    status: boolean
 }
 
 export default Internship

@@ -10,14 +10,17 @@ export class InternshipController {
     addInternship(
         @Body('author') internAuthor: string,
         @Body('offer') internOffer: string,
-        @Body('source') internSource: string
+        @Body('source') internSource: string,
+        @Body('pass') pass: string
     ): any {
         const createdAt = new Date()
         const generated = this.internshipService.insertInternship(
             internAuthor,
             internOffer,
             internSource,
-            createdAt
+            createdAt,
+            true,
+            pass
         )
         return generated
     }
@@ -27,11 +30,17 @@ export class InternshipController {
         return this.internshipService.getInternships()
     }
 
-    // @Delete()
-    // deleteInternship() {
-    //     try{
-    //         this.internshipService.deleteIntership()
-    //         return 'deleted internship'
-    //     }
-    // }
+    @Delete('logic')
+    logicDeleteInternship(
+        @Body('pass') pass: string
+    ) {
+        return this.internshipService.logicDeleteInterships(pass)
+    }
+
+    @Delete()
+    deleteInternship(
+        @Body('pass') pass: string
+    ) {
+        return this.internshipService.deleteInternships(pass)
+    }
 }
