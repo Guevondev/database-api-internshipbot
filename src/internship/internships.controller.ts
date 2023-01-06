@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Delete } from "@nestjs/common";
+import { Controller, Post, Body, Get, Delete, Param } from "@nestjs/common";
 import { InternshipService } from "./internships.service";
 
 @Controller('internships')
@@ -28,6 +28,11 @@ export class InternshipController {
     @Get()
     getInternships() {
         return this.internshipService.getInternships()
+    }
+
+    @Get(':id')
+    getInternshipById(@Param('id') id: string) {
+        return this.internshipService.getInternshipById(id)
     }
 
     @Delete('logic')

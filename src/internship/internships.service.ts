@@ -3,7 +3,7 @@ import Internship from "./internship.model";
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from "mongoose";
 import * as bcrypt from 'bcrypt'
-import { last } from "rxjs";
+import { last, throwError } from "rxjs";
 import e from "express";
 
 const moMil = 2592000000 // month time in miliseconds
@@ -44,7 +44,18 @@ export class InternshipService {
     }
 
     async getInternships() {
-        return await this.internshipModel.find()
+        return await this.internshipModel.find({
+            status: true
+        })
+    }
+    
+
+    async getInternshipById(id: string) {
+        try {
+            return await this.internshipModel.findById(id)
+        } catch( err ) {
+            throw new Error('No existe trabajo con este id')
+        }
     }
 
     async logicDeleteInterships(pass: string) {
@@ -52,17 +63,15 @@ export class InternshipService {
 
         try{
             if ( !valid )
-                return { msg: "Invalid password"}
+                throw new Error("Invalid password")
         } catch (err) {
-            return { msg: 'pass not valid'}
+            throw new Error('Pass is required')
         }
 
         const nowDate = new Date()
         const lastDate = new Date(nowDate.getTime() - moMil)
-        const twoMoDate = new Date(lastDate.getTime() - moMil * 2)
         await this.internshipModel.updateMany({
             createdAt: {
-                $gte: twoMoDate,
                 $lte: lastDate
             }
         }, {
@@ -77,18 +86,16 @@ export class InternshipService {
 
         try{
             if ( !valid )
-                return { msg: "Invalid password"}
+            throw new Error('Invalid password')
         } catch (err) {
-            return { msg: 'pass not valid'}
+            throw new Error('pass not valid')
         }
         
         const nowDate = new Date()
         const twoMoDate = new Date(nowDate.getTime() - moMil * 2)
-        const threeMoDate = new Date(twoMoDate.getTime() - moMil * 3)
 
         await this.internshipModel.deleteMany({
             createdAt: {
-                $gte: threeMoDate,
                 $lte: twoMoDate
             }
         })
