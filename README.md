@@ -13,7 +13,7 @@ Api for internship bot to save internships offers
 
 Post https://api-internship.up.railway.app/internships
 Body
-``bash
+```bash
 author: name,
 offer: description,
 source: telegram/getonboard,
