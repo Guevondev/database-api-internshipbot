@@ -50,8 +50,10 @@ export class InternshipService {
             .skip( page_size * ( page - 1 ) )
         ])
 
+        const total_pages = Math.ceil( total/page_size )
+
         return { 
-            total,
+            total_pages,
             result 
         }
     }
