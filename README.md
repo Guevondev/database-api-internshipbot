@@ -7,7 +7,26 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Api for internship bot to save internships offers
+
+## Endpoints
+
+* Post https://api-internship.up.railway.app/internships
+* Post Body
+```bash
+author: name,
+offer: description,
+source: telegram/getonboard,
+pass: pass
+```
+* Get https://api-internship.up.railway.app/internships
+* Get https://api-internship.up.railway.app/internships/:id
+* Delete https://api-internship.up.railway.app/internships
+* Delete https://api-internship.up.railway.app/internships/logic
+* Delete Body
+```bash
+pass: pass
+```
 
 ## Installation
 
