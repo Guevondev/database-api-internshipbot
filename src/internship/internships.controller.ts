@@ -1,5 +1,7 @@
-import { Controller, Post, Body, Get, Delete, Param } from "@nestjs/common";
+import { Controller, Post, Body, Get, Delete, Param, Query, Req } from "@nestjs/common";
 import { InternshipService } from "./internships.service";
+import { Request } from "express";
+import { internshipQuery } from "types";
 
 @Controller('internships')
 export class InternshipController {
@@ -11,23 +13,34 @@ export class InternshipController {
         @Body('author') internAuthor: string,
         @Body('offer') internOffer: string,
         @Body('source') internSource: string,
-        @Body('pass') pass: string
+        @Body('pass') pass: string = ''
     ): any {
+
         const createdAt = new Date()
+        const intership: internshipQuery = { 
+            author: internAuthor, 
+            offer: internOffer, 
+            source: internSource, 
+            createdAt, 
+            status: true, 
+            pass 
+        }
         const generated = this.internshipService.insertInternship(
-            internAuthor,
-            internOffer,
-            internSource,
-            createdAt,
-            true,
-            pass
+            intership
         )
         return generated
     }
 
     @Get()
-    getInternships() {
-        return this.internshipService.getInternships()
+    getInternships(
+        @Req() req: Request
+    ) {
+        const query = { 
+            page: Number(req.query.page) || 1, 
+            page_size: Number(req.query.page_size) || 10 
+        }
+
+        return this.internshipService.getInternships( query )
     }
 
     @Get(':id')

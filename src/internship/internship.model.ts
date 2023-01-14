@@ -8,6 +8,11 @@ export const InternshipSchema = new mongoose.Schema({
     status: {type: Boolean, required: true}
 })
 
+InternshipSchema.methods.toJSON = function() {
+    const { __v, status, ...internship } = this.toObject()
+    return internship
+}
+
 interface Internship {
     id: string,
     author: string,

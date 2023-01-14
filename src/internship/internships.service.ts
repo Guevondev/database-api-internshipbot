@@ -3,8 +3,7 @@ import Internship from "./internship.model";
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from "mongoose";
 import * as bcrypt from 'bcrypt'
-import { last, throwError } from "rxjs";
-import e from "express";
+import { internshipQuery, queryType } from "types";
 
 const moMil = 2592000000 // month time in miliseconds
 const encryptPass = '$2b$08$HtM2FdIPKL166S89z7cgSOn5BA8jmKOFG5UZjy6j7I1kBb.WF1bge'
@@ -16,37 +15,45 @@ export class InternshipService {
 
     constructor(@InjectModel('Internship') private readonly internshipModel: Model<Internship>) {}
 
-    async insertInternship(author: string, offer: string, source: string, createdAt: Date, status: boolean, pass: string) {
-        const prevInternship = await this.internshipModel.find({ offer })
-        const valid = await isValid(pass)
+    async insertInternship(internship: internshipQuery) {
+
+        const prevInternship = await this.internshipModel.find({ offer: internship.offer })
+
+        const valid = await isValid( internship.pass )
 
         try{
             if ( !valid )
-                return { msg: "Invalid password"}
+                throw new Error('Invalid password')
         } catch (err) {
-            return { msg: 'pass not valid'}
+            throw new Error('Pass is required')
         }
 
         if ( Object.keys(prevInternship).length !== 0 )
             return { msg: "Ya existe esta oferta" }       
 
-        const newInternship = new this.internshipModel({
-            author,
-            offer,
-            source,
-            status,
-            createdAt
-        })
+        const newInternship = new this.internshipModel( internship )
 
         const response = await newInternship.save()
         console.log(response)
         return response
     }
 
-    async getInternships() {
-        return await this.internshipModel.find({
-            status: true
-        })
+    async getInternships(query: queryType) {
+
+        const { page, page_size } = query
+
+        const [ total, result ] = await Promise.all([
+            this.internshipModel.count(),
+            this.internshipModel
+            .find({ status: true })
+            .limit( page_size )
+            .skip( page_size * ( page - 1 ) )
+        ])
+
+        return { 
+            total,
+            result 
+        }
     }
     
 
