@@ -1,18 +1,17 @@
-type internshipQuery = {
+type internshipNoID = {
     author: string,
     offer: string,
     source: string,
-    createdAt: Date,
-    status: Boolean,
-    pass: string
+    createdAt: Date
+    status: boolean
 }
 
-type queryType = {
+type page = {
     page: number,
     page_size: number,
 }
 
 export {
-    internshipQuery,
-    queryType
+    internshipNoID,
+    page
 }

@@ -1,7 +1,8 @@
 import { Controller, Post, Body, Get, Delete, Param, Query, Req } from "@nestjs/common";
 import { InternshipService } from "./internships.service";
 import { Request } from "express";
-import { internshipQuery } from "types";
+import Internship from "./internship.model";
+import { internshipNoID } from "types";
 
 @Controller('internships')
 export class InternshipController {
@@ -17,16 +18,16 @@ export class InternshipController {
     ): any {
 
         const createdAt = new Date()
-        const intership: internshipQuery = { 
+        const intership: internshipNoID = { 
             author: internAuthor, 
             offer: internOffer, 
             source: internSource, 
             createdAt, 
-            status: true, 
-            pass 
+            status: true
         }
         const generated = this.internshipService.insertInternship(
-            intership
+            intership,
+            pass
         )
         return generated
     }

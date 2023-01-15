@@ -3,7 +3,7 @@ import Internship from "./internship.model";
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from "mongoose";
 import * as bcrypt from 'bcrypt'
-import { internshipQuery, queryType } from "types";
+import { internshipNoID, page } from "types";
 
 const moMil = 2592000000 // month time in miliseconds
 const encryptPass = '$2b$08$HtM2FdIPKL166S89z7cgSOn5BA8jmKOFG5UZjy6j7I1kBb.WF1bge'
@@ -15,11 +15,11 @@ export class InternshipService {
 
     constructor(@InjectModel('Internship') private readonly internshipModel: Model<Internship>) {}
 
-    async insertInternship(internship: internshipQuery) {
+    async insertInternship(internship: internshipNoID, pass: string) {
 
         const prevInternship = await this.internshipModel.find({ offer: internship.offer })
 
-        const valid = await isValid( internship.pass )
+        const valid = await isValid( pass )
 
         try{
             if ( !valid )
@@ -38,7 +38,7 @@ export class InternshipService {
         return response
     }
 
-    async getInternships(query: queryType) {
+    async getInternships(query: page) {
 
         const { page, page_size } = query
 
