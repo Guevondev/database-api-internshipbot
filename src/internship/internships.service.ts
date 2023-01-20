@@ -3,7 +3,7 @@ import Internship from "./internship.model";
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from "mongoose";
 import * as bcrypt from 'bcrypt'
-import { internshipNoID, page } from "types";
+import { internshipNoID, page } from "../types";
 
 const moMil = 2592000000 // month time in miliseconds
 const encryptPass = '$2b$08$HtM2FdIPKL166S89z7cgSOn5BA8jmKOFG5UZjy6j7I1kBb.WF1bge'

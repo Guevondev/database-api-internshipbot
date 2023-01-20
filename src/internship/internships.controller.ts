@@ -1,8 +1,7 @@
 import { Controller, Post, Body, Get, Delete, Param, Query, Req } from "@nestjs/common";
 import { InternshipService } from "./internships.service";
 import { Request } from "express";
-import Internship from "./internship.model";
-import { internshipNoID } from "types";
+import { internshipNoID } from "../types";
 
 @Controller('internships')
 export class InternshipController {
