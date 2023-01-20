@@ -12,7 +12,7 @@ Api for internship bot to save internships offers
 * **Delete:** /internships
 * **Delete:** /internships/logic
 
-### Bodies for endpoits
+### Bodies for endpoints
 
 * Post Body
 ```bash
