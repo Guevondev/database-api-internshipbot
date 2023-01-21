@@ -6,25 +6,32 @@ Api for internship bot to save internships offers
 
 ## Endpoints
 
-* **Post:** /internships
-* **Get:** /internships
-* **Get:** /internships/:id
-* **Delete:** /internships
-* **Delete:** /internships/logic
+| Method | Path                 | Description  | Parameters
+| ------ | -------------------- | ------------ | ----------
+|  Get   | `/internships`       | Return all the internships paginated | `?page=1&page_size=10`
+|  Get   | `/internships/:id`   | Return an internship by id
+|  Post  | `/internships`       | Save an internship on DB
+|  Put   | `/internships/:id`   | Update an internship
+| Delete | `/internships`       | Delete physically internships 2 month old
+| Delete | `/internships/logic` | Delete logically internships 1 month old
 
 ### Bodies for endpoints
 
-* Post Body
+**Post Body**
 ```bash
-author: name,
-offer: description,
-source: telegram/getonboard,
-pass: pass
+{
+  author: name,
+  offer: description,
+  source: telegram/getonboard,
+  pass: pass
+}
 ```
 
-* Delete Body
+**Delete Body**
 ```bash
-pass: pass
+{
+  pass: pass
+}
 ```
 
 
